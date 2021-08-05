@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class LeilaoTeste {
-
+	
 	@Test
 	public void deveReceberUmLance() {
 		Leilao leilao = new Leilao("PC de super mercado");
