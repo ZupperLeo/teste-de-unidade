@@ -40,4 +40,49 @@ public class LeilaoTeste {
 		
 		assertEquals(1, leilao.getLances().size());
 	}
+	
+	@Test
+	public void naoDeveAceitarMaisQue5Lances() {
+		Leilao leilao = new Leilao("PC de super mercado");
+		Usuario jose = new Usuario("Jose");
+		Usuario ana = new Usuario("Ana");
+		
+		leilao.propoe(new Lance(jose, 130.60));
+		leilao.propoe(new Lance(ana, 200.00));
+
+		leilao.propoe(new Lance(jose, 230.60));
+		leilao.propoe(new Lance(ana, 300.0));
+		
+		leilao.propoe(new Lance(jose, 330.60));
+		leilao.propoe(new Lance(ana, 400.0));
+		
+		leilao.propoe(new Lance(jose, 430.60));
+		leilao.propoe(new Lance(ana, 500.60));
+
+		leilao.propoe(new Lance(jose, 530.60));
+		leilao.propoe(new Lance(ana, 600.60));
+
+		//Deve ser ignorado
+		leilao.propoe(new Lance(ana, 1000.60));
+		
+		assertEquals(10, leilao.getLances().size());//verifica se apenas 10 lances foram aceitos, no caso, 5 por usuario
+		assertEquals(600.60, leilao.getLances().get(leilao.getLances().size() - 1)
+				.getValor(), 0.00001);//Verifica se o utlimo lance dado foi 600.60
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
