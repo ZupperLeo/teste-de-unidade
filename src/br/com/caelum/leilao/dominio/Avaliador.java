@@ -9,30 +9,22 @@ public class Avaliador {
 
 	private double maiorDeTodos = Double.NEGATIVE_INFINITY;// pega o menor valor do tipo double
 	private double menorDeTodos = Double.POSITIVE_INFINITY;// pega o maior valor do tipo double
-	private double media = 0;
 	private List<Lance> maiores;
 
 	public void avalia(Leilao leilao) {
-		double total = 0;
 		for (Lance lance : leilao.getLances()) {
 			if (lance.getValor() > maiorDeTodos)
 				maiorDeTodos = lance.getValor();
 			if (lance.getValor() < menorDeTodos)
 				menorDeTodos = lance.getValor();
-			total += lance.getValor();
 		}
 
-		if (total == 0) {
-			media = 0;
-			return;
-		}
+		pegaOsMaioresNo(leilao);
+	}
 
-		media = Math.ceil(total / leilao.getLances().size());
-
+	private void pegaOsMaioresNo(Leilao leilao) {
 		maiores = new ArrayList<Lance>(leilao.getLances());
-		
 		Collections.sort(maiores, new Comparator<Lance>() {
-
 			public int compare(Lance o1, Lance o2) {
 				if (o1.getValor() < o2.getValor())
 					return 1;
@@ -41,8 +33,12 @@ public class Avaliador {
 				return 0;
 			}
 		});
-		maiores = maiores.subList(0, maiores.size() > 3 ? 3 : maiores.size());
 
+		maiores = maiores.subList(0, maiores.size() > 3 ? 3 : maiores.size());
+	}
+
+	public List<Lance> getTresMaiores() {
+		return this.maiores;
 	}
 
 	public double getMaiorLance() {
@@ -51,13 +47,5 @@ public class Avaliador {
 
 	public double getMenorLance() {
 		return menorDeTodos;
-	}
-
-	public double getMedia() {
-		return media;
-	}
-
-	public List<Lance> getTresMaiores() {
-		return this.maiores;
 	}
 }
