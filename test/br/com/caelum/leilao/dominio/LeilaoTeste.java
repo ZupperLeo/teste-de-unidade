@@ -69,6 +69,19 @@ public class LeilaoTeste {
 		assertEquals(600.60, leilao.getLances().get(leilao.getLances().size() - 1)
 				.getValor(), 0.00001);//Verifica se o utlimo lance dado foi 600.60
 	}
+	
+    @Test
+    public void deveDobrarOUltimoLanceDado() {
+		Leilao leilao = new Leilao("PC de super mercado");
+		Usuario jose = new Usuario("Jose");
+		Usuario ana = new Usuario("Ana");
+
+        leilao.propoe(new Lance(jose, 2000));
+        leilao.propoe(new Lance(ana, 3000));
+        leilao.dobraLance(jose);
+
+        assertEquals(4000, leilao.getLances().get(2).getValor(), 0.00001);
+    }
 }
 
 
