@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -163,6 +164,21 @@ public class TesteDoAvaliador {
         List<Lance> maiores = leiloeiro.getTresMaiores();
 
         assertEquals(0, maiores.size());
+    }
+    
+    @Test
+    public void naoDeveAvaliarLeiloesSemNenhumLanceDado() {
+        try {
+            Leilao leilao = new CriadorDeLeilao()
+                .para("Playstation 3 Novo")
+                .constroi();
+
+            leiloeiro.avalia(leilao);
+            Assert.fail();
+        }
+        catch(RuntimeException e) {
+            // deu certo!
+        }
     }
     
 }
